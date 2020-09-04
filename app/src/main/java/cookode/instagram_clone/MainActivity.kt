@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import cookode.instagram_clone.AddPostActivity
+import cookode.instagram_clone.R
 import cookode.instagram_clone.fragments.HomeFragment
 import cookode.instagram_clone.fragments.NotificationFragment
 import cookode.instagram_clone.fragments.ProfileFragment
@@ -34,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.nav_add_post -> {
                 item.isChecked = false
-                startActivity(Intent(this@MainActivity,AddPostActivity::class.java))
+                startActivity(Intent(this@MainActivity, AddPostActivity::class.java))
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_notifications -> {
@@ -46,7 +48,6 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
         }
-
         false
     }
 
@@ -54,6 +55,5 @@ class MainActivity : AppCompatActivity() {
         val fragmentTrans = supportFragmentManager.beginTransaction()
         fragmentTrans.replace(R.id.fragment_container,fragment)
         fragmentTrans.commit()
-
     }
 }

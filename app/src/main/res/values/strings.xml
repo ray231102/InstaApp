@@ -36,4 +36,5 @@
     <string name="fullname">Fullname</string>
     <string name="register">Register</string>
     <string name="sign_in">Sign In</string>
+    <string name="logo">logo</string>
 </resources>

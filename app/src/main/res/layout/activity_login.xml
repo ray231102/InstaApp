@@ -5,20 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/back_ui"
-    tools:context=".LoginActivity">
+    tools:context=".activities.LoginActivity">
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="160dp"
         android:layout_height="90dp"
         android:src="@drawable/instagram"
+        android:tint="@android:color/white"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        app:tint="@color/colorWhite"
-        android:contentDescription="@string/todo" />
+        android:layout_marginTop="100dp"/>
 
     <EditText
-        android:id="@+id/email_login"
+        android:id="@+id/edt_email_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/inputs_background"
@@ -28,35 +27,33 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="6dp"
         android:inputType="textEmailAddress"
-        android:hint="@string/email"
-        android:autofillHints="" />
+        android:hint="Email"/>
 
     <EditText
-        android:id="@+id/password_login"
+        android:id="@+id/edt_password_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/inputs_background"
         android:padding="10dp"
-        android:layout_below="@+id/email_login"
+        android:layout_below="@+id/edt_email_login"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="6dp"
         android:inputType="textPassword"
-        android:hint="@string/password"
-        android:autofillHints="" />
+        android:hint="@string/password"/>
 
     <Button
         android:id="@+id/btn_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/password_login"
+        android:layout_below="@id/edt_password_login"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="6dp"
         android:background="@drawable/button_bg"
         android:text="@string/login"
         android:textAllCaps="false"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textColor="@android:color/white"/>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -78,16 +75,18 @@
             app:layout_constraintEnd_toStartOf="@+id/textView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="24dp" />
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/atau"
+            android:text="Atau"
             android:textColor="@android:color/white"
-            android:textSize="20sp"
+            android:textSize="20dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -105,7 +104,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            android:layout_marginLeft="28dp"
+            android:layout_marginRight="24dp" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -132,14 +133,14 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:src="@drawable/ic_bt_login_facebook"
-            android:contentDescription="@string/todo" />
+            android:layout_alignParentLeft="true" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="@string/log_in_with_facebook"
-            android:textSize="16sp"
+            android:text="Log in with Facebook"
+            android:textSize="16dp"
             android:textColor="@drawable/login_button_text_selector" />
 
     </RelativeLayout>
@@ -153,9 +154,9 @@
         android:layout_marginRight="20dp"
         android:layout_marginBottom="25dp"
         android:background="@color/colorBlue"
-        android:text="@string/need_account_sign_up"
+        android:text="Need Account? Sign Up"
         android:textAllCaps="false"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textColor="@android:color/white"/>
 
 </RelativeLayout>
