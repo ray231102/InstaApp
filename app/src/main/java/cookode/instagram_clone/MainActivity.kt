@@ -1,4 +1,4 @@
-package cookode.instagram_clone
+package cookode.instagram_clone._clone
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,9 +6,8 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import cookode.instagram_clone.AddPostActivity
-import cookode.instagram_clone.R
+import cookode.instagram_clone.Fragments.NotificationFragment
 import cookode.instagram_clone.fragments.HomeFragment
-import cookode.instagram_clone.fragments.NotificationFragment
 import cookode.instagram_clone.fragments.ProfileFragment
 import cookode.instagram_clone.fragments.SearchFragment
 
@@ -22,6 +21,7 @@ class MainActivity : AppCompatActivity() {
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
         moveToFragment(HomeFragment())
+
     }
 
     private val onNavigationItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
@@ -48,12 +48,16 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
         }
+
         false
     }
 
     private fun moveToFragment(fragment: Fragment){
         val fragmentTrans = supportFragmentManager.beginTransaction()
         fragmentTrans.replace(R.id.fragment_container,fragment)
+        //commit untuk meneksekusi perpindahan transaksi
         fragmentTrans.commit()
+
     }
+
 }
