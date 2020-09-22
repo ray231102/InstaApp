@@ -130,7 +130,7 @@ class SettingActivity : AppCompatActivity() {
                     }
                 }
                 return@Continuation fileRef.downloadUrl
-            }).addOnCompleteListener ( OnCompleteListener<Uri> { task ->
+            }).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val downloadUrl = task.result
                     myUrl = downloadUrl.toString()
@@ -147,7 +147,7 @@ class SettingActivity : AppCompatActivity() {
                 }else{
                     progressDialog.dismiss()
                 }
-            })
+            }
         }else if(imageUri == null){
             Toast.makeText(this, "Foto harus diubah", Toast.LENGTH_SHORT).show()
             progressDialog.dismiss()

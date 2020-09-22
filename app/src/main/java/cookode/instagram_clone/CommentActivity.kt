@@ -23,7 +23,7 @@ class CommentActivity : AppCompatActivity() {
     private var publisherId = ""
     private var firebaseUser: FirebaseUser? = null
     private var commentAdapter: CommentAdapter? = null
-    private var commentList: MutableList<cookode.instagram_clone.model.Comment>? = null
+    private var commentList: MutableList<Comment>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +78,7 @@ class CommentActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (i in snapshot.children) {
-                        val comments = i.getValue(cookode.instagram_clone.model.Comment::class.java)
+                        val comments = i.getValue(Comment::class.java)
                         commentList?.add(comments!!)
                     }
                     commentAdapter?.notifyDataSetChanged()

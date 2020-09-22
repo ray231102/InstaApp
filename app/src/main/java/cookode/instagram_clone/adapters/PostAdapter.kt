@@ -1,5 +1,6 @@
 package cookode.instagram_clone.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -25,8 +26,8 @@ import cookode.instagram_clone._clone.R
 import de.hdodenhof.circleimageview.CircleImageView
 import org.w3c.dom.Text
 
-class PostAdapter(private val mContext : Context,
-                  private val mPost : List<Post>) : RecyclerView.Adapter<PostAdapter.ViewHolder>() {
+class PostAdapter(private val mContext: Context, private val mPost: List<Post>)
+    : RecyclerView.Adapter<PostAdapter.ViewHolder>(){
 
     private var firebaseUser: FirebaseUser? = null
 
@@ -101,9 +102,10 @@ class PostAdapter(private val mContext : Context,
             .child("Likes").child(postid)
 
         likesRef.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.exists()){
-                    likes.text = p0.childrenCount.toString() + " likes"
+            @SuppressLint("SetTextI18n")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()){
+                    likes.text = snapshot.childrenCount.toString() + " likes"
                 }
             }
 
@@ -119,9 +121,10 @@ class PostAdapter(private val mContext : Context,
             .child("Comments").child(postid)
 
         commentsRef.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.exists()){
-                    comments.text = "view all" + p0.childrenCount.toString() + " comments"
+            @SuppressLint("SetTextI18n")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()){
+                    comments.text = "view all" + snapshot.childrenCount.toString() + " comments"
                 }
 
             }

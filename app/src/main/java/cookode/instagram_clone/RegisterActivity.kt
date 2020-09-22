@@ -14,10 +14,12 @@ import cookode.instagram_clone._clone.MainActivity
 import cookode.instagram_clone._clone.R
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
+import java.util.*
+import kotlin.collections.HashMap
 
 class RegisterActivity : AppCompatActivity() {
 
-    private val mAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val mAuth : FirebaseAuth = FirebaseAuth.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,68 +31,61 @@ class RegisterActivity : AppCompatActivity() {
 
         btn_signin_link.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
-            finish()
         }
-
     }
 
     private fun createAccount() {
-        val fullname: String = edt_fullname_register.text.toString()
-        val username: String = edt_username_register.text.toString()
-        val email: String = edt_email_register.text.toString()
-        val password: String = edt_password_register.text.toString()
+        val fullName : String = edt_fullname_register.text.toString()
+        val userName : String = edt_username_register.text.toString()
+        val email : String = edt_email_register.text.toString()
+        val password : String = edt_password_register.text.toString()
 
-        if (TextUtils.isEmpty(fullname) || TextUtils.isEmpty(username)
-            || TextUtils.isEmpty(email) || TextUtils.isEmpty(password)
-        ) {
-            Toast.makeText(this, "Tidak Boleh Ada Data Yang Kosong", Toast.LENGTH_SHORT).show()
+        if (TextUtils.isEmpty(fullName) ||
+            TextUtils.isEmpty(userName) ||
+            TextUtils.isEmpty(email) ||
+            TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Tidak boleh ada yang kosong", Toast.LENGTH_LONG).show()
         } else {
             val progressDialog = ProgressDialog(this@RegisterActivity)
-            progressDialog.setTitle("Regist...")
-            progressDialog.setMessage("Please Wait")
+            progressDialog.setTitle("Login")
+            progressDialog.setMessage("Please Wait....")
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     progressDialog.dismiss()
-                    saveUserInfo(email, fullname, username, progressDialog)
+                    saveUserInfo(email, fullName, userName, progressDialog)
+                    startActivity(
+                        Intent(this, MainActivity::class.java)
+                            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK))
                     finish()
                 } else {
                     progressDialog.dismiss()
                     mAuth.signOut()
-                    Toast.makeText(this, "Ada Data Yang Kosong", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Register failed", Toast.LENGTH_LONG).show()
                 }
             }
         }
-
     }
 
-    private fun saveUserInfo(
-        email: String,
-        fullname: String,
-        username: String,
-        progressDialog: ProgressDialog
-    ) {
+    private fun saveUserInfo(email : String, fullname : String, username : String, progressDialog : ProgressDialog) {
         val currentUserID = FirebaseAuth.getInstance().currentUser!!.uid
         val usersRef: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Users")
 
         val userMap = HashMap<String, Any>()
         userMap["uid"] = currentUserID
-        userMap["fullname"] = fullname.toLowerCase()
-        userMap["username"] = username.toLowerCase()
+        userMap["fullname"] = fullname.toLowerCase(Locale.ROOT)
+        userMap["username"] = username.toLowerCase(Locale.ROOT)
         userMap["email"] = email
         userMap["bio"] = "Hey Iam student at IDN Boarding School"
-        //create default image profile
-        userMap["image"] =
-            "https://firebasestorage.googleapis.com/v0/b/instagram-app-256b6.appspot.com/o/Default%20Images%2Fprofile.png?alt=media&token=ecebab92-ce4f-463c-a16a-a81fc34b0772"
+        userMap["image"] = "https://firebasestorage.googleapis.com/v0/b/instagram-app-256b6.appspot.com/o/Default%20Images%2Fprofile.png?alt=media&token=ecebab92-ce4f-463c-a16a-a81fc34b0772"
 
-        usersRef.child(currentUserID).setValue(userMap)//menerapkan data yg sudah didapatkan
+        usersRef.child(currentUserID).setValue(userMap)
             .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+                if (task.isSuccessful ){
                     progressDialog.dismiss()
-                    Toast.makeText(this, "Account sudah dibuat", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Account sudah dibuat", Toast.LENGTH_LONG).show()
 
-                    //step 16 get post
                     FirebaseDatabase.getInstance().reference
                         .child("Follow").child(currentUserID)
                         .child("Following").child(currentUserID)
@@ -102,11 +97,10 @@ class RegisterActivity : AppCompatActivity() {
                     finish()
                 } else {
                     val message = task.exception!!.toString()
-                    Toast.makeText(this, "Error: $message", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this,"Error: $message", Toast.LENGTH_LONG).show()
                     FirebaseAuth.getInstance().signOut()
                     progressDialog.dismiss()
                 }
             }
     }
-
 }

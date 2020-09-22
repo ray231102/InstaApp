@@ -60,7 +60,7 @@ class AddPostActivity : AppCompatActivity() {
                     storageProfilePictureRef?.child(System.currentTimeMillis().toString() + ".jpg")
                 val uploadTask: StorageTask<*>
                 val ref = FirebaseDatabase.getInstance().reference.child("Posts")
-                var postId = ref.push().key
+                val postId = ref.push().key
                 uploadTask = fileRef!!.putFile(imageUri!!)
                 uploadTask.continueWithTask(Continuation<UploadTask.TaskSnapshot, Task<Uri>> { task ->
                     if (!task.isSuccessful) {

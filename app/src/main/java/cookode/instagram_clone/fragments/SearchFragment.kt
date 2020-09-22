@@ -17,7 +17,7 @@ import cookode.instagram_clone.Adapter.User
 import cookode.instagram_clone._clone.R
 import cookode.instagram_clone.adapter.UserAdapter
 import kotlinx.android.synthetic.main.fragment_search.view.*
-import java.util.ArrayList
+import java.util.*
 
 /**
  * A simple [Fragment] subclass.
@@ -54,12 +54,10 @@ class SearchFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (view.search_editText.toString() == "") {
-
-                } else {
+                if (view.search_editText.toString() != "") {
                     recyclerView?.visibility = View.VISIBLE
                     getUsers()
-                    searchUser(s.toString().toLowerCase())
+                    searchUser(s.toString().toLowerCase(Locale.ROOT))
                 }
             }
         })

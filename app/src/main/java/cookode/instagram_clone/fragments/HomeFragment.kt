@@ -30,13 +30,18 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        checkFollowing()
 
         val linearLayoutManager = LinearLayoutManager(context)
         view.home_recyclerView?.setHasFixedSize(true)
         view.home_recyclerView?.layoutManager = LinearLayoutManager(context)
         linearLayoutManager.reverseLayout = true
         linearLayoutManager.stackFromEnd = true
+
+        postList = ArrayList()
+        postAdapter = context?.let {PostAdapter(it, postList as ArrayList<Post>)}
+        view.home_recyclerView.adapter = postAdapter
+
+        checkFollowing()
         return view
     }
 
@@ -52,7 +57,7 @@ class HomeFragment : Fragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 postList?.clear()
                 if (snapshot.exists()){
-                    (followingList as ArrayList<String>).clear()
+                    (followingList as ArrayList<*>).clear()
                     for (i in snapshot.children) {
                         i.key.let {
                             (followingList as ArrayList<String>).add(it!!)
@@ -74,7 +79,7 @@ class HomeFragment : Fragment() {
                 for (snapshot in p0.children){
                     val  post = snapshot.getValue(Post::class.java)
 
-                    for (id in (followingList as ArrayList<String>)) {
+                    for (id in (followingList as ArrayList<*>)) {
                         if (post!!.publisher == id){
                             postList!!.add(post)
                         }

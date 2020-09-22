@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -29,7 +28,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Comments"
+                    android:text="@string/comments"
                     android:textSize="18sp"
                     android:maxLines="1"
                     android:textStyle="bold"
@@ -46,7 +45,8 @@
         android:layout_height="200dp"
         android:scaleType="centerCrop"
         android:src="@drawable/profile"
-        android:layout_below="@id/app_bar_layout_comments"/>
+        android:layout_below="@id/app_bar_layout_comments"
+        android:contentDescription="@string/post_photo" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerview_comments"
@@ -71,7 +71,8 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginStart="2dp"
-            android:src="@drawable/profile"/>
+            android:src="@drawable/profile"
+            android:layout_marginLeft="2dp" />
 
         <EditText
             android:id="@+id/add_comment"
@@ -79,11 +80,15 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/profile_image_comment"
             android:layout_toLeftOf="@+id/txtpost_comments"
-            android:hint="comments..."
+            android:hint="@string/comments1"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:layout_marginEnd="10dp"
-            android:padding="8dp"/>
+            android:padding="8dp"
+            android:importantForAutofill="no"
+            android:layout_toEndOf="@+id/profile_image_comment"
+            android:layout_toStartOf="@+id/txtpost_comments"
+            android:inputType="text" />
 
         <TextView
             android:id="@+id/txtpost_comments"
@@ -91,11 +96,13 @@
             android:layout_height="wrap_content"
             android:textColor="@color/colorPrimary"
             android:textStyle="bold"
-            android:textSize="18dp"
-            android:text="Publish"
+            android:textSize="18sp"
+            android:text="@string/publish"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="6dp"/>
+            android:layout_marginEnd="6dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="6dp" />
 
     </RelativeLayout>
 

@@ -1,5 +1,6 @@
 package cookode.instagram_clone.fragments
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -36,6 +37,7 @@ class ProfileFragment : Fragment() {
     var postListGrid: MutableList<Post>? = null
     var myImagesAdapter: MyImageAdapter? = null
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,7 +48,7 @@ class ProfileFragment : Fragment() {
 
         val pref = context?.getSharedPreferences("PREFS", Context.MODE_PRIVATE)
         if (pref != null) {
-            this.profileId = pref?.getString("profileId", "none")!!
+            this.profileId = pref.getString("profileId", "none")!!
         }
 
         val prefEdit = context?.getSharedPreferences("PREFS", Context.MODE_PRIVATE)?.edit()
@@ -91,7 +93,7 @@ class ProfileFragment : Fragment() {
                             .child("Following").child(profileId).setValue(true)
                     }
 
-                    firebaseUser?.uid.let { it1 ->
+                    firebaseUser.uid.let { it1 ->
                         FirebaseDatabase.getInstance().reference
                             .child("Follow").child(profileId)
                             .child("Followers").child(it1).setValue(true)
@@ -99,13 +101,13 @@ class ProfileFragment : Fragment() {
                 }
 
                 getButtonText == "Following" -> {
-                    firebaseUser?.uid.let { it1 ->
+                    firebaseUser.uid.let { it1 ->
                         FirebaseDatabase.getInstance().reference
                             .child("Follow").child(it1)
                             .child("Following").child(profileId).removeValue()
                     }
 
-                    firebaseUser?.uid.let { it1 ->
+                    firebaseUser.uid.let { it1 ->
                         FirebaseDatabase.getInstance().reference
                             .child("Follow").child(profileId)
                             .child("Followers").child(it1).removeValue()
@@ -119,28 +121,25 @@ class ProfileFragment : Fragment() {
     }
 
     private fun checkFollowerOrFollowingStatus() {
-        val followingRef = firebaseUser.uid.let { it1 ->
+
+        firebaseUser.uid.let { it1 ->
             FirebaseDatabase.getInstance().reference
                 .child("Follow").child(it1)
                 .child("Following")
-        }
+        }.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(p0: DataSnapshot) {
 
-        if (followingRef != null) {
-            followingRef.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(p0: DataSnapshot) {
-
-                    if (p0.child(profileId).exists()) {
-                        view?.btn_edit_account?.text = "Following"
-                    } else {
-                        view?.btn_edit_account?.text = "Follow"
-                    }
+                if (p0.child(profileId).exists()) {
+                    view?.btn_edit_account?.text = "Following"
+                } else {
+                    view?.btn_edit_account?.text = "Follow"
                 }
+            }
 
-                override fun onCancelled(p0: DatabaseError) {
+            override fun onCancelled(p0: DatabaseError) {
 
-                }
-            })
-        }
+            }
+        })
     }
 
     private fun getFollowers() {
