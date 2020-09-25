@@ -12,6 +12,8 @@ import cookode.instagram_clone.fragments.ProfileFragment
 import cookode.instagram_clone.fragments.SearchFragment
 
 class MainActivity : AppCompatActivity() {
+    
+    //paras ganteng
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
