@@ -43,6 +43,7 @@ class CommentAdapter(private val mContext : Context, private var mComment : Muta
         var imageProfileComment: CircleImageView = itemView.findViewById(R.id.user_profile_image_comment)
         var userNameCommentTV: TextView = itemView.findViewById(R.id.user_name_comment)
         var commentTV: TextView = itemView.findViewById(R.id.comment_comment)
+        //halo ges
     }
 
 
